@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sistema.blog.sistemablogspringboot.dto.PublicacionDTO;
@@ -34,9 +37,14 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 	}
 
 	@Override
-	public List<PublicacionDTO> obtenerTodasPublicaciones() {
-		List<Publicacion> publicaciones = publicacionRepositorio.findAll();
-		return publicaciones.stream().map(publicacion -> convertirEntidadEnDto(publicacion))
+	public List<PublicacionDTO> obtenerTodasPublicaciones(int numeroPagina,int medidaPagina) {
+		
+		Pageable pageable = PageRequest.of(numeroPagina, medidaPagina);
+		Page<Publicacion> publicaciones = publicacionRepositorio.findAll(pageable);
+		
+		List<Publicacion> publicacionesLista = publicaciones.getContent();
+		
+		return publicacionesLista.stream().map(publicacion -> convertirEntidadEnDto(publicacion))
 				.collect(Collectors.toList());
 	}
 
