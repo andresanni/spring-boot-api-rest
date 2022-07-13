@@ -76,8 +76,16 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 
 	@Override
 	public PublicacionDTO actualizarPublicacion(PublicacionDTO publicacionDTO, Long id) {
-		Publicacion publicacion = convertirDtoEnEntidad(obtenerPublicacionPorId(id));
-		Publicacion publicacionActualizada  = publicacionRepositorio.save(publicacion);
+		
+		Publicacion publicacion = publicacionRepositorio.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+		
+		publicacion.setTitulo(publicacionDTO.getTitulo());
+		publicacion.setDescripcion(publicacionDTO.getDescripcion());
+		publicacion.setContenido(publicacionDTO.getContenido());
+		
+		Publicacion publicacionActualizada = publicacionRepositorio.save(publicacion);
+		
 		return convertirEntidadEnDto(publicacionActualizada);
 	}
 }
