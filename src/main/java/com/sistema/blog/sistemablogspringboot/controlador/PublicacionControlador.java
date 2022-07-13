@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,14 @@ public class PublicacionControlador {
 		return new ResponseEntity<>(publicacionServicio.crearPublicacion(publicacionDTO),HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/obtenerTodo")
+	@GetMapping
 	public List<PublicacionDTO> getAll(){
 		return publicacionServicio.obtenerTodasPublicaciones();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<PublicacionDTO> getById(@PathVariable Long id) {
+		
+		return new ResponseEntity<>(publicacionServicio.obtenerPublicacionPorId(id),HttpStatus.OK);
 	}
 }
