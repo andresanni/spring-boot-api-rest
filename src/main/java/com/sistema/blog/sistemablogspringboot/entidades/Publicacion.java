@@ -3,7 +3,7 @@ package com.sistema.blog.sistemablogspringboot.entidades;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "publicacion", uniqueConstraints = { @UniqueConstraint(columnNames = { "titulo" }) })
+@Table(name = "publicacion", uniqueConstraints = { @UniqueConstraint(columnNames = {"titulo"}) })
 public class Publicacion {
 
 	@Id
