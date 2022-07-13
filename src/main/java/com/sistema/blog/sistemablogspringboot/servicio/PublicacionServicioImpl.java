@@ -73,4 +73,11 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 
 		return convertirEntidadEnDto(publicacion);
 	}
+
+	@Override
+	public PublicacionDTO actualizarPublicacion(PublicacionDTO publicacionDTO, Long id) {
+		Publicacion publicacion = convertirDtoEnEntidad(obtenerPublicacionPorId(id));
+		Publicacion publicacionActualizada  = publicacionRepositorio.save(publicacion);
+		return convertirEntidadEnDto(publicacionActualizada);
+	}
 }

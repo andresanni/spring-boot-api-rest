@@ -9,4 +9,5 @@ public interface PublicacionServicio {
 	public PublicacionDTO crearPublicacion(PublicacionDTO publicacionDTO);
 	public List<PublicacionDTO> obtenerTodasPublicaciones();
 	public PublicacionDTO obtenerPublicacionPorId(Long id);
+	public PublicacionDTO actualizarPublicacion(PublicacionDTO publicacionDTO,Long id);
 }
