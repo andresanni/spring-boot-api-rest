@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,13 @@ public class PublicacionControlador {
 	@PutMapping("/{id}")
 	public ResponseEntity<PublicacionDTO> actualizaPublicacion(@RequestBody PublicacionDTO publicacionDTO,
 			@PathVariable Long id) {
-		
-		return new ResponseEntity<>(publicacionServicio.actualizarPublicacion(publicacionDTO, id),HttpStatus.OK);
+
+		return new ResponseEntity<>(publicacionServicio.actualizarPublicacion(publicacionDTO, id), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> eliminarPublicacion(@PathVariable Long id) {
+		publicacionServicio.eliminarPublicacion(id);
+		return new ResponseEntity<String>("Publicacion Eliminada", HttpStatus.OK);
 	}
 }

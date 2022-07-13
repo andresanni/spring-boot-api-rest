@@ -88,4 +88,13 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 		
 		return convertirEntidadEnDto(publicacionActualizada);
 	}
+
+	@Override
+	public void eliminarPublicacion(Long id) {
+		
+		Publicacion publicacion = publicacionRepositorio.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", id));
+		
+		publicacionRepositorio.delete(publicacion);
+	}
 }
