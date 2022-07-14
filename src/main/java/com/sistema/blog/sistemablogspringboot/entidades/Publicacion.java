@@ -1,5 +1,9 @@
 package com.sistema.blog.sistemablogspringboot.entidades;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +19,10 @@ public class Publicacion {
 	private String descripcion;
 	@Column(name = "contenido", nullable = false)
 	private String contenido;
-
+	
+	@OneToMany(mappedBy = "publicacion",cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comentario> comentarios = new HashSet<>();
+	
 	public Long getId() {
 		return id;
 	}
