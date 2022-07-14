@@ -33,8 +33,9 @@ public class PublicacionControlador {
 
 	@GetMapping
 	public PublicacionRespuesta getAll(@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
-			@RequestParam(value="pageSize",defaultValue="10",required=false)int pageSize) {
-		return publicacionServicio.obtenerTodasPublicaciones(pageNum,pageSize);
+									   @RequestParam(value="pageSize",defaultValue="10",required=false)int pageSize,
+									   @RequestParam(value="sortBy",defaultValue="id",required=false)String ordenarPor) {
+		return publicacionServicio.obtenerTodasPublicaciones(pageNum,pageSize,ordenarPor);
 	}
 
 	@GetMapping("/{id}")

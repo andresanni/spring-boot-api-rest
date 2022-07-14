@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.sistema.blog.sistemablogspringboot.dto.PublicacionDTO;
@@ -38,9 +39,9 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 	}
 
 	@Override
-	public PublicacionRespuesta obtenerTodasPublicaciones(int numeroPagina,int medidaPagina) {
+	public PublicacionRespuesta obtenerTodasPublicaciones(int numeroPagina,int medidaPagina,String ordenarPor) {
 		
-		Pageable pageable = PageRequest.of(numeroPagina, medidaPagina);
+		Pageable pageable = PageRequest.of(numeroPagina, medidaPagina,Sort.by(ordenarPor));
 		Page<Publicacion> publicaciones = publicacionRepositorio.findAll(pageable);
 		
 		List<Publicacion> publicacionesLista = publicaciones.getContent();
