@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sistema.blog.sistemablogspringboot.dto.PublicacionDTO;
+import com.sistema.blog.sistemablogspringboot.dto.PublicacionRespuesta;
 import com.sistema.blog.sistemablogspringboot.servicio.PublicacionServicio;
 
 @RestController
@@ -31,7 +32,7 @@ public class PublicacionControlador {
 	}
 
 	@GetMapping
-	public List<PublicacionDTO> getAll(@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
+	public PublicacionRespuesta getAll(@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
 			@RequestParam(value="pageSize",defaultValue="10",required=false)int pageSize) {
 		return publicacionServicio.obtenerTodasPublicaciones(pageNum,pageSize);
 	}

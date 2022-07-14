@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sistema.blog.sistemablogspringboot.dto.PublicacionDTO;
+import com.sistema.blog.sistemablogspringboot.dto.PublicacionRespuesta;
 import com.sistema.blog.sistemablogspringboot.entidades.Publicacion;
 import com.sistema.blog.sistemablogspringboot.excepciones.ResourceNotFoundException;
 import com.sistema.blog.sistemablogspringboot.repositorio.PublicacionRepositorio;
@@ -37,15 +38,24 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 	}
 
 	@Override
-	public List<PublicacionDTO> obtenerTodasPublicaciones(int numeroPagina,int medidaPagina) {
+	public PublicacionRespuesta obtenerTodasPublicaciones(int numeroPagina,int medidaPagina) {
 		
 		Pageable pageable = PageRequest.of(numeroPagina, medidaPagina);
 		Page<Publicacion> publicaciones = publicacionRepositorio.findAll(pageable);
 		
 		List<Publicacion> publicacionesLista = publicaciones.getContent();
 		
-		return publicacionesLista.stream().map(publicacion -> convertirEntidadEnDto(publicacion))
+		List <PublicacionDTO> listaPublicaciones =  publicacionesLista.stream().map(publicacion -> convertirEntidadEnDto(publicacion))
 				.collect(Collectors.toList());
+		PublicacionRespuesta publicacionRespuesta = new PublicacionRespuesta();
+		publicacionRespuesta.setContenido(listaPublicaciones);
+		publicacionRespuesta.setNumeroPagina(publicaciones.getNumber());
+		publicacionRespuesta.setMedidaPagina(publicaciones.getSize());
+		publicacionRespuesta.setTotalElementos(publicaciones.getTotalElements());
+		publicacionRespuesta.setTotalPaginas(publicaciones.getTotalPages());
+		publicacionRespuesta.setUltimo(publicaciones.isLast());
+		
+		return publicacionRespuesta;
 	}
 
 	// Metodos para mapear DTOS en entidades y viceversa para usar en todos los
