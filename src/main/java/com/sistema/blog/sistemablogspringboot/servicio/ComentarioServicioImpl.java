@@ -88,6 +88,28 @@ public class ComentarioServicioImpl implements ComentarioServicio {
 		
 		return convertirEntidadEnDto(comentario);
 	}
+
+	@Override
+	public ComentarioDTO actualizarComentario(Long publicacionId, Long comentarioId ,ComentarioDTO solicitudComentario) {
+		
+		//Primero obetenemos el comentario y la publicacion a traves de su id y lanzando la excepcion en caso de que no existan
+		Comentario comentario =comentarioRepositorio.findById(comentarioId)
+				.orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", comentarioId));
+		Publicacion publicacion = publicacionRepositorio.findById(publicacionId)
+				.orElseThrow(() -> new ResourceNotFoundException("Publicacion", "id", publicacionId));
+		
+		//Ahora validamos que el comentario corresponda a esa publicacion, ya que puede existir pero no pertenecer a la publicacion que nos trajimos
+		if(!publicacion.getId().equals(comentario.getPublicacion().getId())) {
+			throw new BlogAppException(							HttpStatus.BAD_REQUEST,"El comentario indicado no pertenece a la publicacion indicada");
+		}
+		
+		comentario.setNombre(solicitudComentario.getNombre());
+		comentario.setCuerpo(solicitudComentario.getCuerpo());
+		comentario.setEmail(solicitudComentario.getEmail());
+		
+		Comentario comentarioActualizado = comentarioRepositorio.save(comentario);
+		return solicitudComentario;
+	}
 	
 	
 }

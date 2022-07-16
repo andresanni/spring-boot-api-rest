@@ -1,7 +1,9 @@
 package com.sistema.blog.sistemablogspringboot.excepciones;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+@ResponseStatus
 public class BlogAppException extends RuntimeException {
 	
 	private static final long SerialVersionUID= 1L;
