@@ -67,4 +67,12 @@ public class Publicacion {
 
 	}
 
+	public Set<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(Set<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
 }
