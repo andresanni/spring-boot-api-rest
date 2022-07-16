@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ public class ComentarioServicioImpl implements ComentarioServicio {
 	private ComentarioRepositorio comentarioRepositorio;
 	@Autowired
 	private PublicacionRepositorio publicacionRepositorio;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public ComentarioDTO crearComentario(long publicacionId, ComentarioDTO comentarioDTO) {
@@ -41,26 +44,12 @@ public class ComentarioServicioImpl implements ComentarioServicio {
 	// Convertores de DTO entidad y viceversa
 	private ComentarioDTO convertirEntidadEnDto(Comentario entidad) {
 
-		ComentarioDTO comentarioDTO = new ComentarioDTO();
-
-		comentarioDTO.setId(entidad.getId());
-		comentarioDTO.setCuerpo(entidad.getCuerpo());
-		comentarioDTO.setEmail(entidad.getEmail());
-		comentarioDTO.setNombre(entidad.getNombre());
-
-		return comentarioDTO;
+		return modelMapper.map(entidad, ComentarioDTO.class);
 	}
 
 	private Comentario convertirDtoEnEntidad(ComentarioDTO comentarioDTO) {
 
-		Comentario comentario = new Comentario();
-
-		comentario.setId(comentarioDTO.getId());
-		comentario.setCuerpo(comentarioDTO.getCuerpo());
-		comentario.setEmail(comentarioDTO.getEmail());
-		comentario.setNombre(comentarioDTO.getNombre());
-
-		return comentario;
+		return modelMapper.map(comentarioDTO, Comentario.class);
 	}
 
 	@Override

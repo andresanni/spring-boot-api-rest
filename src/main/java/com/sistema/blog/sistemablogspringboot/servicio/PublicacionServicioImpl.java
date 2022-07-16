@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,9 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 
 	@Autowired
 	private PublicacionRepositorio publicacionRepositorio;
-
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@Override
 	public PublicacionDTO crearPublicacion(PublicacionDTO publicacionDTO) {
 
@@ -63,26 +66,12 @@ public class PublicacionServicioImpl implements PublicacionServicio {
 	// servicios
 	private PublicacionDTO convertirEntidadEnDto(Publicacion entidad) {
 
-		PublicacionDTO publicacionDTO = new PublicacionDTO();
-
-		publicacionDTO.setId(entidad.getId());
-		publicacionDTO.setTitulo(entidad.getTitulo());
-		publicacionDTO.setDescripcion(entidad.getDescripcion());
-		publicacionDTO.setContenido(entidad.getContenido());
-
-		return publicacionDTO;
+		return modelMapper.map(entidad, PublicacionDTO.class);
 	}
 
 	private Publicacion convertirDtoEnEntidad(PublicacionDTO publicacionDTO) {
 
-		Publicacion publicacion = new Publicacion();
-
-		publicacion.setId(publicacionDTO.getId());
-		publicacion.setTitulo(publicacionDTO.getTitulo());
-		publicacion.setDescripcion(publicacionDTO.getDescripcion());
-		publicacion.setContenido(publicacionDTO.getContenido());
-
-		return publicacion;
+		return modelMapper.map(publicacionDTO, Publicacion.class);
 	}
 
 	@Override
