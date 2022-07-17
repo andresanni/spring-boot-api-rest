@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "publicacion", uniqueConstraints = { @UniqueConstraint(columnNames = {"titulo"}) })
 public class Publicacion {
@@ -21,6 +23,7 @@ public class Publicacion {
 	private String contenido;
 	
 	@OneToMany(mappedBy = "publicacion",cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
 	private Set<Comentario> comentarios = new HashSet<>();
 	
 	public Long getId() {

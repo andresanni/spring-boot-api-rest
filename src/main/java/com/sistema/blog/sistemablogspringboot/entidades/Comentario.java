@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "comentarios")
 public class Comentario {
@@ -22,6 +25,7 @@ public class Comentario {
 
 	@ManyToOne(targetEntity = Publicacion.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "publicacion_id", nullable = false)
+	@JsonBackReference
 	private Publicacion publicacion;
 
 	public Long getId() {

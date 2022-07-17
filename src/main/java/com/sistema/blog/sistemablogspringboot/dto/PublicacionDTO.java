@@ -1,10 +1,15 @@
 package com.sistema.blog.sistemablogspringboot.dto;
 
+import java.util.List;
+
+import com.sistema.blog.sistemablogspringboot.entidades.Comentario;
+
 public class PublicacionDTO {
 	private Long id;
 	private String titulo;
 	private String descripcion;
 	private String contenido;
+	private List<Comentario> comentarios;
 
 	public PublicacionDTO(Long id, String titulo, String descripcion, String contenido) {
 		super();
@@ -50,4 +55,12 @@ public class PublicacionDTO {
 		this.contenido = contenido;
 	}
 
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+	
 }
